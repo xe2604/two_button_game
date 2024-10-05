@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://wngyqev3y1c4"]
+
+[ext_resource type="Script" path="res://M/barrier.gd" id="1_wr4fo"]
+[ext_resource type="Texture2D" uid="uid://bpsdoy8uutjs7" path="res://素材/tilemap_packed.png" id="2_814ja"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ninh"]
+size = Vector2(8, 32)
+
+[node name="barrier" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_wr4fo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0ninh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_814ja")
+region_enabled = true
+region_rect = Rect2(8, 0, 8, 32)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

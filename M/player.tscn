@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci6ixs7cwmpcr"]
+
+[ext_resource type="Texture2D" uid="uid://bpsdoy8uutjs7" path="res://素材/tilemap_packed.png" id="1_gfvmg"]
+[ext_resource type="Script" path="res://M/player.gd" id="1_o4bgs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u3lvs"]
+radius = 3.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 3
+script = ExtResource("1_o4bgs")
+jump = 200
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gfvmg")
+region_enabled = true
+region_rect = Rect2(56, 48, 8, 8)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_gfvmg")
+region_enabled = true
+region_rect = Rect2(32, 48, 8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u3lvs")
+
+[node name="jump_time" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="shoot_time" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="jump_time" to="." method="_on_jump_time_timeout"]
+[connection signal="timeout" from="shoot_time" to="." method="_on_shoot_time_timeout"]

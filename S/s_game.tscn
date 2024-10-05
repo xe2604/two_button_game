@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjnc63x2c2fsx"]
+
+[ext_resource type="Script" path="res://S/s_game.gd" id="1_gr02w"]
+[ext_resource type="PackedScene" uid="uid://ca10q2uah8mq2" path="res://M/player_ui.tscn" id="2_hjvhe"]
+[ext_resource type="FontFile" uid="uid://b2mlmy5afafts" path="res://素材/字体/SmileySans-Oblique.ttf" id="3_j4m1d"]
+[ext_resource type="PackedScene" uid="uid://dwt3se3hf1j80" path="res://M/map.tscn" id="3_yjkpm"]
+[ext_resource type="PackedScene" uid="uid://ci6ixs7cwmpcr" path="res://M/player.tscn" id="4_fcsyy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycas6"]
+size = Vector2(354, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yc6ra"]
+size = Vector2(25.5, 161)
+
+[node name="S_game" type="Node2D" groups=["main"]]
+script = ExtResource("1_gr02w")
+speed = 15.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="Player_UI" parent="." instance=ExtResource("2_hjvhe")]
+
+[node name="game_over" type="Label" parent="Player_UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -11.5
+offset_right = 31.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_j4m1d")
+theme_override_font_sizes/font_size = 100
+text = "Game over"
+
+[node name="start" type="Button" parent="Player_UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = 71.0
+offset_right = 102.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_j4m1d")
+theme_override_font_sizes/font_size = 100
+text = "return"
+
+[node name="df" type="Label" parent="Player_UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -315.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("3_j4m1d")
+theme_override_font_sizes/font_size = 100
+text = "1"
+justification_flags = 131
+
+[node name="map" parent="." instance=ExtResource("3_yjkpm")]
+
+[node name="player" parent="." instance=ExtResource("4_fcsyy")]
+position = Vector2(0, 33)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5, 91)
+shape = SubResource("RectangleShape2D_ycas6")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(-189.75, -4.5)
+shape = SubResource("RectangleShape2D_yc6ra")
+
+[connection signal="button_down" from="Player_UI/start" to="." method="_on_start_button_down"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
